@@ -21,10 +21,10 @@ pip install icw-index
 
 ## Usage
 This library is a function, `icw_index`, that has two arguments:
-- `index_vars`: A list of length `N` numpy arrays, each containing one variable to include in the index. All arrays must be the same length.
+- `arrays`: A list of length `N` arrays, each containing one variable to include in the index. All arrays must be the same length and have no missing values.
 - `reference_mask`: (optional) A boolean numpy array of the same length as the index variables, indicating which observations to use as the reference group for normalization. If not provided, the full sample is used (which is the default in STATA `swindex`)
 
-And `icw_index` returns a numpy array of length `N` ICW index values. ICW index values are normalized to have mean 0 and standard deviation 1 either
+`icw_index` returns a numpy array of length `N` ICW index values. ICW index values are normalized to have mean 0 and standard deviation 1 either
 across the full sample (default) or within the reference group (if `reference_mask` is provided).
 
 ### Basic example with numpy arrays
