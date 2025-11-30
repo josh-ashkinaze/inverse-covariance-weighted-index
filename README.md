@@ -7,7 +7,7 @@ A Python implementation of the Inverse-Covariance Weighted (ICW) Index introduce
 ```python
 import numpy as np
 import pandas as pd
-from icw import icw_index # or just copy-paste this function
+from icw import icw_index  # or just copy-paste this function
 
 # Example using numpy arrays
 x1 = np.random.rand(100)
@@ -16,17 +16,17 @@ index = icw_index([x1, x2])
 
 # Example using Pandas dataframes 
 df = pd.DataFrame({'var1': np.random.rand(100),
-                    'var2': np.random.rand(100),
-                    'treat': np.random.randint(0, 2, size=100)})
+                   'var2': np.random.rand(100),
+                   'treat': np.random.randint(0, 2, size=100)})
 
 # Full sample normalization, no reference group. Entire index is distributed M=0, SD=1
-df['icw'] = icw_index([df['var1'].values, df['var2'].values]) 
+df['icw'] = icw_index([df['var1'].values, df['var2'].values])
 
 # User-specified reference group normalization. Control group is distributed M=0, SD=1 
 # and treatment group is in effect size units relative to control group.
 ref_mask = (df['treat'] == 0).values
 df['icw_control_reference'] = icw_index([df['var1'].values, df['var2'].values],
-                                 reference_mask=ref_mask) 
+                                        reference_mask=ref_mask) 
 ```
 
 ## What is the ICW Index?

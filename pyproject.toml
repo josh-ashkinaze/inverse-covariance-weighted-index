@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "icw"
+dynamic = ["version"]
+description = "An implementation of Anderson (2008) inverse covariance weighted index for Python, validated against STATA's Swindex package."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+
+authors = [
+  { name = "Joshua Ashkinaze" }
+]
+
+dependencies = ["numpy>=1.24"]
+
+[project.urls]
+Homepage = "https://github.com/josh-ashkinaze/icw-index"
+
+[tool.setuptools]
+packages = ["icw"]
+
+[tool.setuptools.dynamic]
+version = { attr = "icw.__version__" }

@@ -17,9 +17,8 @@ Outputs:
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from icw import icw_index
+from icw.icw import icw_index
 import pandas as pd
-import numpy as np
 
 FLOAT_TOL = 1e-6
 
