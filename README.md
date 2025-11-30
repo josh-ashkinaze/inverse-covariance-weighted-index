@@ -2,12 +2,18 @@
 
 A Python implementation of the Inverse-Covariance Weighted (ICW) Index introduced by Anderson (2008) and implemented in Stata's `swindex` by Schwab et al. (2020). I validated this against Stata's `swindex` and produces effectively identical results.
 
+## Install 
+
+```python
+pip install icw-index
+```
+
 ## Quick Start
 
 ```python
 import numpy as np
 import pandas as pd
-from icw import icw_index  # or just copy-paste this function
+from icw import icw_index  
 
 # Example using numpy arrays
 x1 = np.random.rand(100)
