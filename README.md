@@ -47,7 +47,10 @@ print(f"shape={index.shape}, mean={index.mean():.1e}, std={index.std():.1e}") # 
 ### Basic example with Pandas DataFrame
 
 ``` python
-# Example using Pandas dataframes 
+import numpy as np
+import pandas as pd
+from icw import icw_index
+np.random.seed(42)
 df = pd.DataFrame({'var1': np.random.rand(100),
                    'var2': np.random.rand(100),
                    'var3': np.random.rand(100),
@@ -55,6 +58,11 @@ df = pd.DataFrame({'var1': np.random.rand(100),
 
 # Full sample normalization, no reference group. Entire index is distributed M=0, SD=1
 df['icw'] = icw_index([df['var1'].values, df['var2'].values, df['var3'].values])
+
+# An equivalent but more concise way using list comprehension when you have a lot of variables
+index_vars = ['var1', 'var2', 'var3']
+df['icw'] = icw_index([df[x] for x in index_vars])
+
 ```
 
 ### Using a reference group for normalization
@@ -76,12 +84,12 @@ for vars in ['var1', 'var2']:
 
 # Full sample normalization
 index_vars = ['var1', 'var2', 'var3']
-df['icw'] = icw_index([df[x].values for x in index_vars])
+df['icw'] = icw_index([df[x] for x in index_vars])
 
 # Control group normalization
-ref_mask = (df['treat'] == 0).values
+ref_mask = (df['treat'] == 0)
 df['icw_control_reference'] = icw_index(
-    [df[x].values for x in index_vars],
+    arrays=[df[x] for x in index_vars],
     reference_mask=ref_mask,
 )
 ```
