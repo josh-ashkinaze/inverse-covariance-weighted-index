@@ -94,7 +94,10 @@ df['icw_control_reference'] = icw_index(
     reference_mask=ref_mask,
 )
 ```
-Now let's take the data generated above and compare `icw` (full sample normalization) to `icw_control_reference` (control group normalization). If we look at `icw`, we see that the treatment has a mean index of about 0.54, while the control group has a mean of about -0.64. So the delta is about 1.18 standard deviations. Now if we look at `icw_control_reference`, we see that the control group is distributed mean 0 and SD 1 (by construction), while the treatment group has mean of about 1.18 (which is the same delta as before). So one of the neat things about using a reference group is that the treatment index values can be interpreted directly as effect sizes relative to the reference group, 
+Now let's take the data generated above and compare `icw` (full sample normalization) to `icw_control_reference` (control group normalization). 
+- If we look at `icw`, we see that the treatment has a mean index of about 0.54, while the control group has a mean of about -0.64. So the delta is about 1.18 standard deviations. 
+- Now if we look at `icw_control_reference`, we see that the control group is distributed mean 0 and SD 1 (by construction), while the treatment group has mean of about 1.18---which is the same delta as before. 
+- So one of the neat things about using a reference group is that the treatment index values can be interpreted directly as effect sizes relative to the reference group, 
 since they're in terms of reference group standard deviations.
 
 
