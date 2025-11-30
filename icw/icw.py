@@ -1,3 +1,5 @@
+import numpy as np
+
 def icw_index(arrays, reference_mask=None):
     """
     Create ICW index from multiple indicator arrays.
@@ -33,8 +35,6 @@ def icw_index(arrays, reference_mask=None):
         df['icw_control_reference'] = icw_index([df['var1'].values, df['var2'].values],
                                          reference_mask=ref_mask)
     """
-    import numpy as np
-
     # Validate arrays
     for arr in arrays:
         if np.isnan(arr).any():
