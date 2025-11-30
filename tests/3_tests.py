@@ -3,15 +3,17 @@ Unit tests for ICW index implementation.
 
 Compares the Anderson index computed by Stata's swindex command to the icw_index function from icw.py.
 """
+import os
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
 
 import unittest
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from icw.icw import icw_index
+from icw import icw_index
 import pandas as pd
 import numpy as np
-
 
 FLOAT_TOL = 1e-6
 
@@ -20,9 +22,9 @@ class TestICWIndex(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.df = pd.read_csv('test_datasets.csv')
-        cls.stata_results = pd.read_csv('swindex_results.csv')
-        cls.stata_results_normby = pd.read_csv('swindex_normby_results.csv')
+        cls.df = pd.read_csv(HERE / 'test_datasets.csv')
+        cls.stata_results = pd.read_csv(HERE / 'swindex_results.csv')
+        cls.stata_results_normby = pd.read_csv(HERE / 'swindex_normby_results.csv')
 
     def compute_python_results(self, use_reference_mask=False):
         """
@@ -84,15 +86,16 @@ class TestICWIndex(unittest.TestCase):
         stats = self.compare_results(self.stata_results, python_results)
 
         all_close = np.allclose(stats['stata_values'], stats['python_values'],
-                               atol=FLOAT_TOL, rtol=0)
+                                atol=FLOAT_TOL, rtol=0)
 
         self.assertTrue(all_close,
-                       "Python and Stata results differ by more than tolerance")
+                        "Python and Stata results differ by more than tolerance")
         self.assertGreater(stats['correlation'], 0.9999,
-                          f"Correlation {stats['correlation']:.15f} is too low")
+                           f"Correlation {stats['correlation']:.15f} is too low")
         print("Full sample stats")
-        print(f"Datasets: {stats['n_datasets']}, Observations: {stats['n_obs']}, Correlation: {stats['correlation']:.15f},"
-              f"n Differences > {FLOAT_TOL}: {np.sum(np.abs(stats['stata_values'] - stats['python_values']) > FLOAT_TOL)}")
+        print(
+            f"Datasets: {stats['n_datasets']}, Observations: {stats['n_obs']}, Correlation: {stats['correlation']:.15f},"
+            f"n Differences > {FLOAT_TOL}: {np.sum(np.abs(stats['stata_values'] - stats['python_values']) > FLOAT_TOL)}")
 
     def test_control_group_normalization(self):
         """Test control group normalization matches Stata swindex normby"""
@@ -100,15 +103,16 @@ class TestICWIndex(unittest.TestCase):
         stats = self.compare_results(self.stata_results_normby, python_results)
 
         all_close = np.allclose(stats['stata_values'], stats['python_values'],
-                               atol=FLOAT_TOL, rtol=0)
+                                atol=FLOAT_TOL, rtol=0)
 
         self.assertTrue(all_close,
-                       "Python and Stata results differ by more than tolerance")
+                        "Python and Stata results differ by more than tolerance")
         self.assertGreater(stats['correlation'], 0.9999,
-                          f"Correlation {stats['correlation']:.15f} is too low")
+                           f"Correlation {stats['correlation']:.15f} is too low")
         print("Full sample stats")
-        print(f"Datasets: {stats['n_datasets']}, Observations: {stats['n_obs']}, Correlation: {stats['correlation']:.15f},"
-              f"n Differences > {FLOAT_TOL}: {np.sum(np.abs(stats['stata_values'] - stats['python_values']) > FLOAT_TOL)}")
+        print(
+            f"Datasets: {stats['n_datasets']}, Observations: {stats['n_obs']}, Correlation: {stats['correlation']:.15f},"
+            f"n Differences > {FLOAT_TOL}: {np.sum(np.abs(stats['stata_values'] - stats['python_values']) > FLOAT_TOL)}")
 
     def test_input_validation(self):
         """Test input validation"""
